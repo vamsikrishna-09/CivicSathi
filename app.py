@@ -347,7 +347,7 @@ def admin_page():
                 else:
                     st.warning("Please confirm deletion first.")
     else:
-            st.info("Only demo complaints can be deleted from this dashboard.")
+        st.info("Only demo complaints can be deleted from this dashboard.")
 
     with st.expander("Sample data for demos"):
         st.caption("Adds five fictional complaints, labelled as demo data. Delete the database file to start fresh.")
