@@ -34,6 +34,7 @@ GEMINI_API_KEY = _setting("GEMINI_API_KEY")
 GEMINI_MODEL = _setting("GEMINI_MODEL")
 
 DEMO_MODE = _flag("CIVICSATHI_DEMO_MODE", "true")
+ADMIN_PASSWORD = _setting("CIVICSATHI_ADMIN_PASSWORD")
 
 DB_PATH = _setting("CIVICSATHI_DB_PATH") or "civicsathi.db"
 UPLOAD_DIR = _setting("CIVICSATHI_UPLOAD_DIR") or "uploads"

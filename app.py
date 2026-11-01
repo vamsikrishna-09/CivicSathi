@@ -245,8 +245,31 @@ def track_page():
 # ---------- Admin Dashboard ----------
 
 def admin_page():
-    st.header("Demo Admin Dashboard — no authentication")
-    st.warning("Demonstration view only. It has no login and is not a secure administration interface.")
+    if not config.ADMIN_PASSWORD:
+        st.error("Admin login is not configured. Set CIVICSATHI_ADMIN_PASSWORD in your secrets.")
+        return
+
+    if not st.session_state.get("admin_authenticated", False):
+        st.header("Admin Login")
+        with st.form("admin_login_form"):
+            password = st.text_input("Admin password", type="password")
+            submitted = st.form_submit_button("Log in")
+
+        if submitted:
+            import hmac
+            if hmac.compare_digest(password, config.ADMIN_PASSWORD):
+                st.session_state.admin_authenticated = True
+                st.rerun()
+            else:
+                st.error("Incorrect password. Please try again.")
+        return
+
+    st.header("Admin Dashboard")
+
+
+    if st.button("Logout"):
+        st.session_state.admin_authenticated = False
+        st.rerun()
     if db_error:
         st.error(db_error)
         return
