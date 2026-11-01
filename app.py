@@ -330,6 +330,25 @@ def admin_page():
                 st.session_state.flash = f"{chosen} is now {new_status}."
                 st.rerun()
 
+    st.divider()
+    st.subheader("Delete complaint")
+
+    if c["is_demo"]:
+            confirm_delete = st.checkbox(
+                "I confirm I want to delete this demo complaint",
+                key=f"delete_confirm_{chosen}"
+            )
+
+            if st.button("Delete demo complaint", type="secondary"):
+                if confirm_delete:
+                    database.delete_complaint(config.DB_PATH, chosen)
+                    st.session_state.flash = f"{chosen} deleted successfully."
+                    st.rerun()
+                else:
+                    st.warning("Please confirm deletion first.")
+    else:
+            st.info("Only demo complaints can be deleted from this dashboard.")
+
     with st.expander("Sample data for demos"):
         st.caption("Adds five fictional complaints, labelled as demo data. Delete the database file to start fresh.")
         if st.button("Add sample complaints"):

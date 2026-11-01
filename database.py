@@ -117,6 +117,15 @@ def update_status(db_path, tracking_id, status):
     return cur.rowcount > 0
 
 
+def delete_complaint(db_path, tracking_id):
+    """Delete a complaint by tracking ID. Returns True if deleted."""
+    with closing(_connect(db_path)) as conn, conn:
+        cur = conn.execute(
+            "DELETE FROM complaints WHERE tracking_id = ?",
+            (tracking_id,)
+        )
+    return cur.rowcount > 0
+
 def status_counts(db_path):
     with closing(_connect(db_path)) as conn:
         rows = conn.execute("SELECT status, COUNT(*) AS n FROM complaints GROUP BY status").fetchall()

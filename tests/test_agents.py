@@ -34,7 +34,8 @@ def test_priority_always_supported():
 
 
 def test_unclear_severity_defaults_to_medium_with_review():
-    result = agents.run_analysis("There is a pothole.", "Main road")["routing"]
+    analysis = agents.demo_analyze("There is a pothole.")
+    result = agents.demo_route("There is a pothole.", analysis, "Main road")
     assert result.priority == "Medium" and result.human_review is True
 
 
